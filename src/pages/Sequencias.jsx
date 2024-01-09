@@ -7,7 +7,7 @@ import Premios from '../components/Premios';
 function Sequencias() {
 
     const [sorteios] = useOutletContext();
-    const sorteiosFiltrados = useRef(sorteios);
+    const sorteiosFiltrados = useRef(findSequences());
     const [concurso, setConcurso] = useState(sorteiosFiltrados.current.length - 1);
     const [bolasMarcadas, setBolasMarcadas] = useState({});
     const bolas = {
@@ -57,6 +57,9 @@ function Sequencias() {
         }
         sorteiosFiltrados.current = novo;
         novo.length > 0 ? setConcurso(novo.length - 1) : setConcurso(-1);
+    }
+    function findSequences() {
+        return sorteios;
     }
     return (
         <div className="concursos">
