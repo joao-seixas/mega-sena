@@ -1,0 +1,23 @@
+.bolas {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 10px;
+}
+
+.linha {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+.bola {
+    user-select: none;
+    display: inline-flex;
+    border: 1px solid gray;
+    border-radius: 50%;
+    width: 1.8rem;
+    height: 1.8rem;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0.3rem;
+    color: gray;
+}

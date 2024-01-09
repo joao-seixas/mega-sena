@@ -1,0 +1,60 @@
+.data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.input-data {
+    width: 0;
+    visibility: hidden;
+}
+
+.calendario {
+    width: 20px;
+    margin-left: 5px;
+}
+
+.calendario:hover {
+    cursor: pointer;
+}
+
+.concurso {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.1rem;
+}
+
+.botao-concurso {
+    font-family: monospace;
+    background-color: white;
+    border: none;
+    width: 2rem;
+    height: 2rem;
+    font-size: 2rem;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    opacity: 1;
+}
+
+.mirror {
+    transform: scaleX(-1);
+}
+
+.botao-concurso:hover {
+    cursor: pointer;
+}
+
+.botao-concurso:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.input-concurso {
+    border: none;
+    font-size: 1.1rem;
+    width: 4.4rem;
+    text-align: center;
+}
