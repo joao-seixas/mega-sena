@@ -1,8 +1,5 @@
 {
     "rewrites":  [
-      {"source": "/", "destination": "/"},
-      {"source": "/concursos", "destination": "/concursos"},
-      {"source": "/numeros", "destination": "/numeros"},
-      {"source": "/sequencias", "destination": "/sequencias"}
+      {"source": "/(.*)", "destination": "/"}
     ]
 }
