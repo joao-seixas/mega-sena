@@ -19,8 +19,8 @@ function App() {
 
   return (
     <>
-    <Menu />
-    <Outlet context={[sorteios]} />
+      <Menu />
+      <Outlet context={[sorteios]} />
     </>
   )
 }
