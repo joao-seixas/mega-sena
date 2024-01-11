@@ -1,0 +1,30 @@
+.player {
+    display: flex;
+    justify-content: center;
+}
+
+.mirror {
+    transform: scaleX(-1);
+}
+
+.player-button {
+    font-family: monospace;
+    background-color: white;
+    border: none;
+    width: 2rem;
+    height: 2rem;
+    font-size: 2rem;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    opacity: 1;
+}
+
+.player-button:hover {
+    cursor: pointer;
+}
+
+.player-button:disabled {
+    opacity: 0.3;
+    cursor: default;
+}

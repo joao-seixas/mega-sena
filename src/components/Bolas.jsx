@@ -11,6 +11,7 @@ function Bolas ({bolas, callbackBola}) {
     ];
 
     return (
+        <div className="outer-container">
         <div className="bolas">
             {numeros.map((linha, indice) =>
                 <div key={indice} className="linha">
@@ -21,7 +22,6 @@ function Bolas ({bolas, callbackBola}) {
                             data-numero={numero}
                             style={{
                                 color: bolas[numero]?.cor,
-                                borderColor: bolas[numero]?.borda,
                                 backgroundColor: bolas[numero]?.background
                             }}
                             title={bolas[numero]?.title}
@@ -33,6 +33,7 @@ function Bolas ({bolas, callbackBola}) {
                 </div>
             )}
         </div>
+    </div>
     );
 }
 

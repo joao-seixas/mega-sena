@@ -26,7 +26,7 @@ function Data({dataString}) {
 
     if (dataString)
     return (
-        <div>
+        <div className="main-menu">
             {diaSemana[data.getUTCDay()]}, {data.getUTCDate()}{data.getUTCDate() === 1 ? 'º' : ''} de {meses[data.getUTCMonth()]} de {data.getUTCFullYear()}
         </div>
     ); else

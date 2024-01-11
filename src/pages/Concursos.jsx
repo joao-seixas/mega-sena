@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import Navegador from '../components/Navegador';
+import Player from '../components/Player';
 import Bolas from '../components/Bolas';
 import Premios from '../components/Premios';
 
@@ -11,12 +12,12 @@ function Concursos() {
     const [concurso, setConcurso] = useState(sorteios.length - 1);
     const sorteiosFiltrados = useMemo(filtraSorteios, [bolasMarcadas]);
     const bolas = {
-        [sorteiosFiltrados[concurso]?.Bola1] : {cor: 'white', background: 'green', borda: 'black', title: 'sorteada'},
-        [sorteiosFiltrados[concurso]?.Bola2] : {cor: 'white', background: 'green', borda: 'black', title: 'sorteada'},
-        [sorteiosFiltrados[concurso]?.Bola3] : {cor: 'white', background: 'green', borda: 'black', title: 'sorteada'},
-        [sorteiosFiltrados[concurso]?.Bola4] : {cor: 'white', background: 'green', borda: 'black', title: 'sorteada'},
-        [sorteiosFiltrados[concurso]?.Bola5] : {cor: 'white', background: 'green', borda: 'black', title: 'sorteada'},
-        [sorteiosFiltrados[concurso]?.Bola6] : {cor: 'white', background: 'green', borda: 'black', title: 'sorteada'},
+        [sorteiosFiltrados[concurso]?.Bola1] : {cor: 'white', background: 'green', title: 'sorteada'},
+        [sorteiosFiltrados[concurso]?.Bola2] : {cor: 'white', background: 'green', title: 'sorteada'},
+        [sorteiosFiltrados[concurso]?.Bola3] : {cor: 'white', background: 'green', title: 'sorteada'},
+        [sorteiosFiltrados[concurso]?.Bola4] : {cor: 'white', background: 'green', title: 'sorteada'},
+        [sorteiosFiltrados[concurso]?.Bola5] : {cor: 'white', background: 'green', title: 'sorteada'},
+        [sorteiosFiltrados[concurso]?.Bola6] : {cor: 'white', background: 'green', title: 'sorteada'},
         ...bolasMarcadas
     };
     const callbackConcurso = (novoConcurso) => {
@@ -31,7 +32,7 @@ function Concursos() {
             return;
         }
         if (Object.keys(tempBolas).length > 5) return;
-        tempBolas = {...tempBolas, [bola] : {cor: 'white', background: 'blue', borda: 'black', title: 'sorteada'}};
+        tempBolas = {...tempBolas, [bola] : {cor: 'black', background: 'lightgreen', title: 'sorteada'}};
         setBolasMarcadas(tempBolas);
     }
     function filtraSorteios() {
@@ -62,6 +63,7 @@ function Concursos() {
             <div>Concursos encontrados: {sorteiosFiltrados.length}</div>
             <Navegador concurso={concurso} sorteios={sorteiosFiltrados} callbackConcurso={callbackConcurso} />
             <Bolas bolas={bolas} callbackBola={callbackBola} />
+            <Player concurso={concurso} sorteios={sorteiosFiltrados} callbackConcurso={callbackConcurso} />
             <Premios sorteio={sorteiosFiltrados[concurso]} />
         </div>
     );

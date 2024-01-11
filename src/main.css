@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+body {
+    margin: 0;
+}
+
 html {
     text-align: center;
-    font-family: sans-serif;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 * {
