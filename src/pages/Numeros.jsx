@@ -47,7 +47,7 @@ function Numeros() {
     
     return (
         <div className="concursos">
-            <div className="volante">
+            <div className="mapa-calor">
                 <div>{sorteiosFiltrados.length} {sorteiosFiltrados.length > 1 ? 'concursos' : 'concurso'}</div>
                 <Bolas bolas={bolas} callbackBola={null} />
             </div>

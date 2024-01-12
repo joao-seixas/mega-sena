@@ -1,7 +1,7 @@
 .player {
     display: flex;
     justify-content: center;
-    position: absolute;
+    position: sticky;
     bottom: 0;
     left: 0;
     padding: 10px;
