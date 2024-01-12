@@ -1,0 +1,8 @@
+.volante {
+    display: block;
+    width: fit-content;
+    border-radius: 10px;
+    background-color: #1C873A;
+    border: 1px solid darkgreen;
+    margin: 10px auto 20px auto;
+}

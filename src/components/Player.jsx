@@ -50,7 +50,7 @@ function Player({concurso, sorteios, callbackConcurso}) {
     }
 
     return (
-        <div className="player">
+        <footer className="player">
             <button
                 className="player-button mirror"
                 disabled={btnAnteriorDisabled || (timer.current && (playing != 'fastRewind'))}
@@ -79,7 +79,7 @@ function Player({concurso, sorteios, callbackConcurso}) {
             >
                 <img src={playing === 'fastForward' ? pauseIcon : fastIcon} />
             </button>
-        </div>
+        </footer>
     );
 }
 

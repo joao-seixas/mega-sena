@@ -1,42 +1,37 @@
 import './Premios.css';
 
 function Premios({sorteio}) {
-    const ganhadores = sorteio ?
-        sorteio['Ganhadores 6 acertos'] ?
-            sorteio['Ganhadores 6 acertos'] > 1 ?
-                `${sorteio['Ganhadores 6 acertos']} ganhadores` :
-                `${sorteio['Ganhadores 6 acertos']} ganhador` :
-            'Sem ganhadores' :
-        'Nenhum concurso encontrado';
+    const ganhadores = sorteio?.['Ganhadores 6 acertos'];
+    const rateio = sorteio?.['Rateio 6 acertos'].replace('R$', 'R$ ');
+    const total = rateio && (parseFloat(rateio.replace('R$ ', '').replaceAll('.', '').replace(',', '.')) * ganhadores).toLocaleString('pt-BR', {style:"currency", currency:"BRL"});
+    const acumulado = sorteio?.['Acumulado 6 acertos'].replace('R$', 'R$ ');
+    const ganhadoresQuina = sorteio?.['Ganhadores 5 acertos'].toLocaleString('pt-BR');
+    const rateioQuina = sorteio?.['Rateio 5 acertos'].replace('R$', 'R$ ');
+    const ganhadoresQuadra = sorteio?.['Ganhadores 4 acertos'].toLocaleString('pt-BR');
+    const rateioQuadra = sorteio?.['Rateio 4 acertos'].replace('R$', 'R$ ');
 
-    const premio = sorteio ?
-        sorteio['Ganhadores 6 acertos'] ?
-            `Prêmio por ganhador: ${sorteio['Rateio 6 acertos'].replace('R$', 'R$ ')}` :
-            `Prêmio acumulado: ${sorteio['Acumulado 6 acertos'].replace('R$', 'R$ ')}` :
-        '';
-
-    const quina = sorteio ?
-        `Quina: ${sorteio['Ganhadores 5 acertos'].toLocaleString('pt-BR')} ganhadores - ${sorteio['Rateio 5 acertos'].replace('R$', 'R$ ')}` :
-        '';
-
-    const quadra = sorteio ?
-        `Quadra: ${sorteio['Ganhadores 4 acertos']?.toLocaleString('pt-BR')} ganhadores - ${sorteio['Rateio 4 acertos']?.replace('R$', 'R$ ')}` :
-        '';
-
-    return (
+    if (sorteio) return (
         <div className="premios">
-            <div>
-                {ganhadores}
+            <div className="bold">
+                {ganhadores > 0 ? `${ganhadores}` : 'Sem ganhadores'}
+                {ganhadores === 1 && ` ganhador`}
+                {ganhadores > 1 && ` ganhadores - ${rateio}`}
             </div>
             <div>
-                {premio}
+                {ganhadores ?
+                    <span>Prêmio total: <span className="bold">{total}</span></span> :
+                    <span>Prêmio acumulado: <span className="bold">{acumulado}</span></span>}
             </div>
             <div>
-                {quina}
+                Quina: {ganhadoresQuina} ganhadores - <span className="bold">{rateioQuina}</span>
             </div>
             <div>
-                {quadra}
+                Quadra: {ganhadoresQuadra} ganhadores - <span className="bold">{rateioQuadra}</span>
             </div>
+        </div>
+    ); else return (
+        <div className="premios">
+            Nenhum concurso encontrado
         </div>
     );
 }

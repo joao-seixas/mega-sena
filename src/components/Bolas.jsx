@@ -11,7 +11,6 @@ function Bolas ({bolas, callbackBola}) {
     ];
 
     return (
-        <div className="outer-container">
         <div className="bolas">
             {numeros.map((linha, indice) =>
                 <div key={indice} className="linha">
@@ -33,7 +32,6 @@ function Bolas ({bolas, callbackBola}) {
                 </div>
             )}
         </div>
-    </div>
     );
 }
 

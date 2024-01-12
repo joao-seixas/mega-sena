@@ -1,3 +1,4 @@
+import './Concursos.css';
 import { useState, useMemo } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import Navegador from '../components/Navegador';
@@ -60,11 +61,12 @@ function Concursos() {
 
     return (
         <div className="concursos">
-            <div>Concursos encontrados: {sorteiosFiltrados.length}</div>
-            <Navegador concurso={concurso} sorteios={sorteiosFiltrados} callbackConcurso={callbackConcurso} />
-            <Bolas bolas={bolas} callbackBola={callbackBola} />
-            <Player concurso={concurso} sorteios={sorteiosFiltrados} callbackConcurso={callbackConcurso} />
+            <div className="volante">
+                <Navegador concurso={concurso} sorteios={sorteiosFiltrados} callbackConcurso={callbackConcurso} />
+                <Bolas bolas={bolas} callbackBola={callbackBola} />
+            </div>
             <Premios sorteio={sorteiosFiltrados[concurso]} />
+            <Player concurso={concurso} sorteios={sorteiosFiltrados} callbackConcurso={callbackConcurso} />
         </div>
     );
 }

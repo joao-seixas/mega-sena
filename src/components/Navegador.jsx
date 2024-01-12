@@ -1,15 +1,16 @@
 import './Navegador.css';
 import { useRef } from 'react';
-import Data from '../components/Data';
 import calendarIcon from '../assets/calendar.svg';
 import nextIcon from '../assets/next.svg';
 import beforeIcon from '../assets/before.svg';
 import firsIcon from '../assets/first.svg';
 import lastIcon from '../assets/last.svg';
 
-function Navegador({concurso, sorteios, callbackConcurso}) {
+function Navegador({concurso, sorteios, callbackConcurso, small}) {
     const semConcursos = sorteios.length < 1;
     const data = semConcursos ?  '' : sorteios[concurso]?.['Data do Sorteio'].split('/').reverse().join('-');
+    const dateOptions = small ? {} : {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+    const dataString = semConcursos ?  '-' : new Date(`${data}T03:00:00`).toLocaleDateString('pt-BR', dateOptions);
     const refInputData = useRef(null);
     const btnAnteriorDisabled = concurso === 0 || semConcursos;
     const btnPosteriorDisabled = concurso === sorteios.length - 1 || semConcursos;
@@ -37,8 +38,11 @@ function Navegador({concurso, sorteios, callbackConcurso}) {
 
     return (
         <div className="navegador">
+            <div className="quantidade-concursos">
+                {small ? '' : `Concursos encontrados: ${sorteios.length}`}
+            </div>
             <div className="data">
-                <Data dataString={sorteios[concurso]?.['Data do Sorteio']} />
+                {dataString}
                 <img
                     className="calendario"
                     src={calendarIcon}
@@ -68,13 +72,17 @@ function Navegador({concurso, sorteios, callbackConcurso}) {
                 >
                     <img src={beforeIcon} />
                 </button>
-                Concurso
+                {small ? '' : 'Concurso'}
                 <select
                     className="input-concurso"
                     value={concurso}
                     disabled={semConcursos}
                     onChange={({target: {value}}) => callbackConcurso(parseInt(value))}>
-                        {sorteios.map((sorteio, index) => <option key={sorteio.Concurso} value={index}>{sorteio.Concurso}</option>)}
+                        {sorteios.map((sorteio, index) =>
+                            <option key={sorteio.Concurso} value={index}>
+                                {sorteio.Concurso}
+                            </option>
+                        )}
                 </select>
                 <button
                     className="botao-concurso"

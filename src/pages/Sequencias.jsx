@@ -1,8 +1,10 @@
+import './Sequencias.css';
 import { useState, useMemo } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import Navegador from '../components/Navegador';
 import Bolas from '../components/Bolas';
 import Premios from '../components/Premios';
+import Player from '../components/Player';
 
 function Sequencias() {
 
@@ -13,12 +15,12 @@ function Sequencias() {
     const [concurso, setConcurso] = useState(sorteiosFiltrados[sequencias].length - 1);
     const [bolasMarcadas, setBolasMarcadas] = useState({});
     const bolas = {
-        [sorteiosAtuais[concurso]?.Bola1] : {cor: 'white', background: 'green', borda: 'black', title: 'sorteada'},
-        [sorteiosAtuais[concurso]?.Bola2] : {cor: 'white', background: 'green', borda: 'black', title: 'sorteada'},
-        [sorteiosAtuais[concurso]?.Bola3] : {cor: 'white', background: 'green', borda: 'black', title: 'sorteada'},
-        [sorteiosAtuais[concurso]?.Bola4] : {cor: 'white', background: 'green', borda: 'black', title: 'sorteada'},
-        [sorteiosAtuais[concurso]?.Bola5] : {cor: 'white', background: 'green', borda: 'black', title: 'sorteada'},
-        [sorteiosAtuais[concurso]?.Bola6] : {cor: 'white', background: 'green', borda: 'black', title: 'sorteada'},
+        [sorteiosAtuais[concurso]?.Bola1] : {cor: 'white', background: 'green', title: 'sorteada'},
+        [sorteiosAtuais[concurso]?.Bola2] : {cor: 'white', background: 'green', title: 'sorteada'},
+        [sorteiosAtuais[concurso]?.Bola3] : {cor: 'white', background: 'green', title: 'sorteada'},
+        [sorteiosAtuais[concurso]?.Bola4] : {cor: 'white', background: 'green', title: 'sorteada'},
+        [sorteiosAtuais[concurso]?.Bola5] : {cor: 'white', background: 'green', title: 'sorteada'},
+        [sorteiosAtuais[concurso]?.Bola6] : {cor: 'white', background: 'green', title: 'sorteada'},
         ...bolasMarcadas
     };
     const callbackConcurso = (novoConcurso) => {
@@ -34,7 +36,7 @@ function Sequencias() {
             return;
         }
         if (Object.keys(tempBolas).length > 5) return;
-        tempBolas = {...tempBolas, [bola] : {cor: 'white', background: 'blue', borda: 'black', title: 'sorteada'}};
+        tempBolas = {...tempBolas, [bola] : {cor: 'white', background: 'lightgreen', title: 'sorteada'}};
         setBolasMarcadas(tempBolas);
         filtraSorteios(tempBolas);
     }
@@ -96,8 +98,11 @@ function Sequencias() {
 
     return (
         <div className="concursos">
-            <Navegador concurso={concurso} sorteios={sorteiosAtuais} callbackConcurso={callbackConcurso} />
-            <div>Concursos encontrados: {sorteiosAtuais.length}</div>
+            <div className="volante">
+                <Navegador concurso={concurso} sorteios={sorteiosAtuais} callbackConcurso={callbackConcurso} small={false} />
+                <Bolas bolas={bolas} callbackBola={callbackBola} />
+            </div>
+            <Premios sorteio={sorteiosAtuais[concurso]} />
             <div>
                 <input type="radio" name="sequencias" id="two" value="0" checked={sequencias === 0} onChange={handleChangeSequencias} />
                 <label htmlFor="two">2</label>
@@ -110,8 +115,7 @@ function Sequencias() {
                 <input type="radio" name="sequencias" id="six" value="4" checked={sequencias === 4} onChange={handleChangeSequencias} />
                 <label htmlFor="six">6</label>
             </div>
-            <Bolas bolas={bolas} callbackBola={callbackBola} />
-            <Premios sorteio={sorteiosAtuais[concurso]} />
+            <Player concurso={concurso} sorteios={sorteiosAtuais} callbackConcurso={callbackConcurso} />
         </div>
     );
 }

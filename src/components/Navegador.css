@@ -1,3 +1,10 @@
+.navegador {
+    display: inline-block;
+    padding: 0.3rem;
+    border-radius: 10px;
+    color: white;
+}
+
 .data {
     display: flex;
     justify-content: center;
@@ -37,10 +44,8 @@
     justify-content: center;
     display: flex;
     opacity: 1;
-}
-
-.mirror {
-    transform: scaleX(-1);
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 50%;
 }
 
 .botao-concurso:hover {
@@ -57,4 +62,7 @@
     font-size: 1.1rem;
     width: 4.4rem;
     text-align: center;
+    color: white;
+    background-color: #007D56;
+    border-radius: 10px;
 }

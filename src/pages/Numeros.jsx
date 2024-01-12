@@ -1,11 +1,9 @@
 import './Numeros.css';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import Bolas from '../components/Bolas';
 import Navegador from '../components/Navegador';
-import playIcon from '../assets/play.svg';
-import fastIcon from '../assets/fast.svg';
-import pauseIcon from '../assets/pause.svg';
+import Player from '../components/Player';
 
 function Numeros() {
 
@@ -46,19 +44,22 @@ function Numeros() {
         }
         return currentBolas;
     }
-
+    
     return (
         <div className="concursos">
-            <div>{sorteiosFiltrados.length} {sorteiosFiltrados.length > 1 ? 'concursos' : 'concurso'}</div>
-            <Bolas bolas={bolas} callbackBola={null} />
+            <div className="volante">
+                <div>{sorteiosFiltrados.length} {sorteiosFiltrados.length > 1 ? 'concursos' : 'concurso'}</div>
+                <Bolas bolas={bolas} callbackBola={null} />
+            </div>
+            <Player concurso={sorteiosFiltrados.length - 1} sorteios={sorteios.slice(concursoInicial, sorteios.length)} callbackConcurso={callbackFim} />
             <div className="painel-concurso">
                 <div>
                     <h3>Início</h3>
-                    <Navegador concurso={concursoInicial} sorteios={sorteios.slice(0, concursoFinal)} callbackConcurso={callbackInicio} />
+                    <Navegador concurso={concursoInicial} sorteios={sorteios.slice(0, concursoFinal)} callbackConcurso={callbackInicio} small={true} />
                 </div>
                 <div>
                     <h3>Fim</h3>
-                    <Navegador concurso={sorteiosFiltrados.length - 1} sorteios={sorteios.slice(concursoInicial, sorteios.length)} callbackConcurso={callbackFim} />
+                    <Navegador concurso={sorteiosFiltrados.length - 1} sorteios={sorteios.slice(concursoInicial, sorteios.length)} callbackConcurso={callbackFim} small={true} />
                 </div>
             </div>
         </div>
