@@ -16,12 +16,12 @@ function Concursos() {
     const [concurso, setConcurso] = useState(sorteiosFiltrados[sequencias].length - 1);
     const [bolasMarcadas, setBolasMarcadas] = useState({});
     const bolas = {
-        [sorteiosAtuais[concurso]?.Bola1] : {cor: 'white', background: 'green', title: 'sorteada'},
-        [sorteiosAtuais[concurso]?.Bola2] : {cor: 'white', background: 'green', title: 'sorteada'},
-        [sorteiosAtuais[concurso]?.Bola3] : {cor: 'white', background: 'green', title: 'sorteada'},
-        [sorteiosAtuais[concurso]?.Bola4] : {cor: 'white', background: 'green', title: 'sorteada'},
-        [sorteiosAtuais[concurso]?.Bola5] : {cor: 'white', background: 'green', title: 'sorteada'},
-        [sorteiosAtuais[concurso]?.Bola6] : {cor: 'white', background: 'green', title: 'sorteada'},
+        [sorteiosAtuais[concurso]?.Bola1] : {cor: 'white', background: '#BF5700', title: 'sorteada'},
+        [sorteiosAtuais[concurso]?.Bola2] : {cor: 'white', background: '#BF5700', title: 'sorteada'},
+        [sorteiosAtuais[concurso]?.Bola3] : {cor: 'white', background: '#BF5700', title: 'sorteada'},
+        [sorteiosAtuais[concurso]?.Bola4] : {cor: 'white', background: '#BF5700', title: 'sorteada'},
+        [sorteiosAtuais[concurso]?.Bola5] : {cor: 'white', background: '#BF5700', title: 'sorteada'},
+        [sorteiosAtuais[concurso]?.Bola6] : {cor: 'white', background: '#BF5700', title: 'sorteada'},
         ...bolasMarcadas
     };
     const callbackConcurso = (novoConcurso) => {
@@ -37,7 +37,7 @@ function Concursos() {
             return;
         }
         if (Object.keys(tempBolas).length > 5) return;
-        tempBolas = {...tempBolas, [bola] : {cor: 'white', background: 'lightgreen', title: 'sorteada'}};
+        tempBolas = {...tempBolas, [bola] : {cor: 'white', background: '#CEA54E', title: 'sorteada'}};
         setBolasMarcadas(tempBolas);
         filtraSorteios(tempBolas);
     }

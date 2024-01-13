@@ -24,6 +24,7 @@
     margin: 0.2rem;
     background-color: white;
     box-shadow: 1px 1px 3px 0px #274472;
+    font-weight: bold;
 }
 
 .bola:hover {

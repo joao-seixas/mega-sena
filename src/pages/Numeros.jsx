@@ -53,6 +53,7 @@ function Numeros() {
                 </div>
                 <Bolas bolas={bolas} callbackBola={null} />
             </div>
+            <Player concurso={sorteiosFiltrados.length - 1} sorteios={sorteios.slice(concursoInicial, sorteios.length)} callbackConcurso={callbackFim} />
             <div className="painel-numeros">
                 <div className="navegador-numeros">
                     <div className="titulo">Início</div>
@@ -63,7 +64,6 @@ function Numeros() {
                     <Navegador concurso={sorteiosFiltrados.length - 1} sorteios={sorteios.slice(concursoInicial, sorteios.length)} callbackConcurso={callbackFim} small={true} />
                 </div>
             </div>
-            <Player concurso={sorteiosFiltrados.length - 1} sorteios={sorteios.slice(concursoInicial, sorteios.length)} callbackConcurso={callbackFim} />
         </div>
     );
 }
