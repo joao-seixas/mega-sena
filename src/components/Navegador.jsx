@@ -14,7 +14,7 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
     const refInputData = useRef(null);
     const btnAnteriorDisabled = concurso === 0 || semConcursos;
     const btnPosteriorDisabled = concurso === sorteios.length - 1 || semConcursos;
-    const inputDataHandleChange = ({target: {value}}) => {
+    function inputDataHandleChange({target: {value}}) {
         let posInicial = 0;
         let posFinal = sorteios.length - 1;
         let dataBuscada = new Date(value);
