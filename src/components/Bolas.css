@@ -2,6 +2,8 @@
     border-radius: 0 0 10px 10px;
     padding: 5px;
     background-color: rgba(255, 255, 255, 0.3);
+    width: 96vw;
+    max-width: 500px;
 }
 
 .linha {
@@ -11,11 +13,11 @@
 
 .bola {
     position: relative;
+    flex-grow: 1;
+    aspect-ratio: 1/1;
     user-select: none;
     display: inline-flex;
     border-radius: 50%;
-    width: 1.8rem;
-    height: 1.8rem;
     justify-content: center;
     align-items: center;
     color: gray;

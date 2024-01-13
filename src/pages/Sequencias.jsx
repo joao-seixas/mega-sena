@@ -5,6 +5,7 @@ import Navegador from '../components/Navegador';
 import Bolas from '../components/Bolas';
 import Premios from '../components/Premios';
 import Player from '../components/Player';
+import Filtro from '../components/Filtro';
 
 function Sequencias() {
 
@@ -103,18 +104,7 @@ function Sequencias() {
                 <Bolas bolas={bolas} callbackBola={callbackBola} />
             </div>
             <Premios sorteio={sorteiosAtuais[concurso]} />
-            <div>
-                <input type="radio" name="sequencias" id="two" value="0" checked={sequencias === 0} onChange={handleChangeSequencias} />
-                <label htmlFor="two">2</label>
-                <input type="radio" name="sequencias" id="three" value="1" checked={sequencias === 1} onChange={handleChangeSequencias} />
-                <label htmlFor="three">3</label>
-                <input type="radio" name="sequencias" id="four" value="2" checked={sequencias === 2} onChange={handleChangeSequencias} />
-                <label htmlFor="four">4</label>
-                <input type="radio" name="sequencias" id="five" value="3" checked={sequencias === 3} onChange={handleChangeSequencias} />
-                <label htmlFor="five">5</label>
-                <input type="radio" name="sequencias" id="six" value="4" checked={sequencias === 4} onChange={handleChangeSequencias} />
-                <label htmlFor="six">6</label>
-            </div>
+            <Filtro sequencias={sequencias} handleChangeSequencias={handleChangeSequencias} />
             <Player concurso={concurso} sorteios={sorteiosAtuais} callbackConcurso={callbackConcurso} />
         </div>
     );

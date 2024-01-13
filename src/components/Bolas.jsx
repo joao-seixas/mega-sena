@@ -26,7 +26,7 @@ function Bolas ({bolas, callbackBola}) {
                             title={bolas[numero]?.title}
                             onClick={(e) => callbackBola && callbackBola(e.target.getAttribute('data-numero'))}
                         >
-                            {numero}
+                            {numero < 10 ? `0${numero}` : `${numero}`}
                         </div>
                     )}
                 </div>
