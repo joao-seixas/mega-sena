@@ -48,20 +48,22 @@ function Numeros() {
     return (
         <div className="concursos">
             <div className="mapa-calor">
-                <div>{sorteiosFiltrados.length} {sorteiosFiltrados.length > 1 ? 'concursos' : 'concurso'}</div>
+                <div className="numero-concursos">
+                    {sorteiosFiltrados.length} {sorteiosFiltrados.length > 1 ? 'concursos' : 'concurso'}
+                </div>
                 <Bolas bolas={bolas} callbackBola={null} />
             </div>
-            <Player concurso={sorteiosFiltrados.length - 1} sorteios={sorteios.slice(concursoInicial, sorteios.length)} callbackConcurso={callbackFim} />
-            <div className="painel-concurso">
-                <div>
-                    <h3>Início</h3>
+            <div className="painel-numeros">
+                <div className="navegador-numeros">
+                    <div className="titulo">Início</div>
                     <Navegador concurso={concursoInicial} sorteios={sorteios.slice(0, concursoFinal)} callbackConcurso={callbackInicio} small={true} />
                 </div>
-                <div>
-                    <h3>Fim</h3>
+                <div className="navegador-numeros">
+                    <div className="titulo">Fim</div>
                     <Navegador concurso={sorteiosFiltrados.length - 1} sorteios={sorteios.slice(concursoInicial, sorteios.length)} callbackConcurso={callbackFim} small={true} />
                 </div>
             </div>
+            <Player concurso={sorteiosFiltrados.length - 1} sorteios={sorteios.slice(concursoInicial, sorteios.length)} callbackConcurso={callbackFim} />
         </div>
     );
 }

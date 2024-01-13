@@ -72,8 +72,8 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
                 >
                     <img src={beforeIcon} />
                 </button>
-                {small ? '' : 'Concurso'}
-                <select
+                {small ? <></> : 'Concurso'}
+                {small ? <></> : <select
                     className="input-concurso"
                     value={concurso}
                     disabled={semConcursos}
@@ -83,7 +83,7 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
                                 {sorteio.Concurso}
                             </option>
                         )}
-                </select>
+                </select>}
                 <button
                     className="botao-concurso"
                     disabled={btnPosteriorDisabled}
@@ -99,6 +99,17 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
                     <img src={lastIcon} />
                 </button>
             </div>
+            {small ? <select
+                    className="input-concurso"
+                    value={concurso}
+                    disabled={semConcursos}
+                    onChange={({target: {value}}) => callbackConcurso(parseInt(value))}>
+                        {sorteios.map((sorteio, index) =>
+                            <option key={sorteio.Concurso} value={index}>
+                                {sorteio.Concurso}
+                            </option>
+                        )}
+                </select> : <></>}
         </div>
     );
 }

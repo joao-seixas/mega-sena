@@ -7,9 +7,26 @@
     margin: 10px auto 20px auto;
 }
 
-.painel-concurso {
+.numero-concursos {
+    font-weight: bold;
+    margin: 10px;
+}
+
+.painel-numeros {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
     gap: 20px;
+}
+
+.navegador-numeros {
+    background-color: #77544b;
+    border-radius: 10px;
+}
+
+.titulo {
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+    margin-top: 10px;
 }
