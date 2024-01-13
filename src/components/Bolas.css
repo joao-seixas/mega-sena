@@ -43,3 +43,16 @@
     filter: blur(5px);
     z-index: 2;
 }
+
+.bola-numeros:active::after {
+    content: attr(title);
+    position: absolute;
+    top: -3rem;
+    left: -1.5rem;
+    padding: 0.3rem;
+    color: black;
+    background-color: lightyellow;
+    border: 1px solid black;
+    font-weight: lighter;
+    z-index: 10;
+}

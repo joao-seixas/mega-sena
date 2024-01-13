@@ -41,7 +41,7 @@ function Concursos() {
         setBolasMarcadas(tempBolas);
         filtraSorteios(tempBolas);
     }
-    const filtraSorteios = (tempBolas) => {
+    function filtraSorteios(tempBolas) {
         let todosEncontrados;
         let umEncontrado;
         let novo = [];

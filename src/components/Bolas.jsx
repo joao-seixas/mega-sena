@@ -17,7 +17,7 @@ function Bolas ({bolas, callbackBola}) {
                     {linha.map((numero) =>
                         <div
                             key={numero}
-                            className="bola"
+                            className={callbackBola ? 'bola' : 'bola bola-numeros'}
                             data-numero={numero}
                             style={{
                                 color: bolas[numero]?.cor,
