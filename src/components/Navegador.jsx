@@ -38,7 +38,7 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
         //home/delete
         if (event.keyCode === 35 || event.keyCode === 36) return;
         //enter
-        if (event.keyCode === 13 || event.keyCode === 9) searchConcurso(event);
+        if (event.keyCode === 13) searchConcurso(event);
         
         event.preventDefault();
     }
