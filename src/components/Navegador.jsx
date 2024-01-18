@@ -124,6 +124,7 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
                         value={inputValue}
                         onKeyDown={handleInputConcurso}
                         onChange={(event) => setInputValue(event.target.value)}
+                        onClick={(event) => event.target.select()}
                         onBlur={searchConcurso}
                     />
                 }
@@ -150,6 +151,7 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
                     value={inputValue}
                     onKeyDown={handleInputConcurso}
                     onChange={(event) => setInputValue(event.target.value)}
+                    onClick={(event) => event.target.select()}
                     onBlur={searchConcurso}
                 /> : <></>}
         </div>
