@@ -56,10 +56,16 @@
 
 .input-concurso {
     border: none;
+    border-radius: 10px;
     font-size: 1.1rem;
-    width: 4.4rem;
+    width: 3.5rem;
+    padding: 0;
     text-align: center;
     color: white;
-    background-color: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.input-concurso:focus {
+    outline: 1px solid rgba(0, 0, 0, 0.3);
 }

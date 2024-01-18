@@ -24,10 +24,10 @@ function Concursos() {
         [sorteiosAtuais[concurso]?.Bola6] : {cor: 'white', background: '#BF5700', title: 'sorteada'},
         ...bolasMarcadas
     };
-    const callbackConcurso = (novoConcurso) => {
+    function callbackConcurso(novoConcurso) {
         setConcurso(novoConcurso);
     }
-    const callbackBola = (bola) => {
+    function callbackBola(bola) {
         let tempBolas = {...bolasMarcadas};
 
         if (bola in tempBolas) {

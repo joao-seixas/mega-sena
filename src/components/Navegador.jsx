@@ -1,5 +1,5 @@
 import './Navegador.css';
-import { useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import calendarIcon from '../assets/calendar.svg';
 import nextIcon from '../assets/next.svg';
 import beforeIcon from '../assets/before.svg';
@@ -11,30 +11,69 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
     const data = semConcursos ?  '' : sorteios[concurso]?.['Data do Sorteio'].split('/').reverse().join('-');
     const dateOptions = small ? {} : {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
     const dataString = semConcursos ?  '-' : new Date(`${data}T03:00:00`).toLocaleDateString('pt-BR', dateOptions);
+    const [inputValue, setInputValue] = useState(sorteios[concurso].Concurso);
     const refInputData = useRef(null);
     const btnAnteriorDisabled = concurso === 0 || semConcursos;
     const btnPosteriorDisabled = concurso === sorteios.length - 1 || semConcursos;
     function inputDataHandleChange({target: {value}}) {
-        let posInicial = 0;
-        let posFinal = sorteios.length - 1;
-        let dataBuscada = new Date(value);
-        let meio;
-        let dataAtual;
-
-        while(posInicial <= posFinal) {
-            meio = parseInt((posInicial + posFinal) / 2);
-            dataAtual = new Date(sorteios[meio]['Data do Sorteio'].split('/').reverse().join('-'));
-
-            if (dataAtual.getTime() === dataBuscada.getTime()) {
-                callbackConcurso(meio);
-                return;
-            }
-            if (dataAtual > dataBuscada) posFinal = meio - 1;
-            if (dataAtual < dataBuscada) posInicial = meio + 1;
-        }
-
-        callbackConcurso(meio);
+        callbackConcurso(
+            binarySearch(
+                new Date(value).getTime(),
+                sorteios.length,
+                (index) => new Date(sorteios[index]['Data do Sorteio'].split('/').reverse().join('-')).getTime()
+            )
+        );
     }
+    function handleInputConcurso(event) {
+        // numeros
+        if (event.keyCode > 47 && event.keyCode < 58) return;
+        // backspace
+        if (event.keyCode === 8) return;
+        // shift/control
+        if (event.keyCode === 16 || event.keyCode === 17) return;
+        // direita/esquerda
+        if (event.keyCode === 37 || event.keyCode === 39) return;
+        // tab
+        if (event.keyCode === 9) return;
+        //home/delete
+        if (event.keyCode === 35 || event.keyCode === 36) return;
+        //enter
+        if (event.keyCode === 13 || event.keyCode === 9) searchConcurso(event);
+        
+        event.preventDefault();
+    }
+    function searchConcurso(event) {
+        let concursoAtual = binarySearch(
+            parseInt(event.target.value),
+            sorteios.length,
+            (index) => sorteios[index].Concurso
+        );
+
+        callbackConcurso(concursoAtual);
+        setInputValue(sorteios[concursoAtual].Concurso);
+        event.target.blur();
+    }
+    function binarySearch(searchValue, datasetSize, parseFunction) {
+        let initalPosition = 0;
+        let finalPosition = datasetSize - 1;
+        let middle;
+        let currentValue;
+    
+        while(initalPosition <= finalPosition) {
+            middle = parseInt((initalPosition + finalPosition) / 2);
+            currentValue = parseFunction(middle);
+    
+            if (currentValue === searchValue) return middle;
+            if (currentValue > searchValue) finalPosition = middle - 1;
+            if (currentValue < searchValue) initalPosition = middle + 1;
+        }
+    
+        return middle;
+    }
+
+    useEffect(() => {
+        setInputValue(sorteios[concurso].Concurso);
+    }, [concurso]);
 
     return (
         <div className="navegador">
@@ -73,17 +112,17 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
                     <img src={beforeIcon} />
                 </button>
                 {small ? <></> : 'Concurso'}
-                {small ? <></> : <select
-                    className="input-concurso"
-                    value={concurso}
-                    disabled={semConcursos}
-                    onChange={({target: {value}}) => callbackConcurso(parseInt(value))}>
-                        {sorteios.map((sorteio, index) =>
-                            <option key={sorteio.Concurso} value={index}>
-                                {sorteio.Concurso}
-                            </option>
-                        )}
-                </select>}
+                {small ? <></> : 
+                    <input
+                        className="input-concurso"
+                        type="text"
+                        inputMode="numeric"
+                        value={inputValue}
+                        onKeyDown={handleInputConcurso}
+                        onChange={(event) => setInputValue(event.target.value)}
+                        onBlur={searchConcurso}
+                    />
+                }
                 <button
                     className="botao-concurso"
                     disabled={btnPosteriorDisabled}
@@ -99,17 +138,16 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
                     <img src={lastIcon} />
                 </button>
             </div>
-            {small ? <select
+            {small ?
+                <input
                     className="input-concurso"
-                    value={concurso}
-                    disabled={semConcursos}
-                    onChange={({target: {value}}) => callbackConcurso(parseInt(value))}>
-                        {sorteios.map((sorteio, index) =>
-                            <option key={sorteio.Concurso} value={index}>
-                                {sorteio.Concurso}
-                            </option>
-                        )}
-                </select> : <></>}
+                    type="text"
+                    inputMode="numeric"
+                    value={inputValue}
+                    onKeyDown={handleInputConcurso}
+                    onChange={(event) => setInputValue(event.target.value)}
+                    onBlur={searchConcurso}
+                /> : <></>}
         </div>
     );
 }
