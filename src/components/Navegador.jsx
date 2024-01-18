@@ -43,7 +43,11 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
         event.preventDefault();
     }
     function searchConcurso(event) {
-        let concursoAtual = binarySearch(
+        let concursoAtual;
+
+        if (event.target.value === '') return;
+
+        concursoAtual = binarySearch(
             parseInt(event.target.value),
             sorteios.length,
             (index) => sorteios[index].Concurso
