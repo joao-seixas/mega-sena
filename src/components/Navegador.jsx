@@ -11,7 +11,7 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
     const data = semConcursos ?  '' : sorteios[concurso]?.['Data do Sorteio'].split('/').reverse().join('-');
     const dateOptions = small ? {} : {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
     const dataString = semConcursos ?  '-' : new Date(`${data}T03:00:00`).toLocaleDateString('pt-BR', dateOptions);
-    const [inputValue, setInputValue] = useState(sorteios[concurso].Concurso);
+    const [inputValue, setInputValue] = useState(semConcursos ? '' : sorteios[concurso].Concurso);
     const refInputData = useRef(null);
     const btnAnteriorDisabled = concurso === 0 || semConcursos;
     const btnPosteriorDisabled = concurso === sorteios.length - 1 || semConcursos;
@@ -76,7 +76,7 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
     }
 
     useEffect(() => {
-        setInputValue(sorteios[concurso].Concurso);
+        setInputValue(semConcursos ? '' : sorteios[concurso].Concurso);
     }, [concurso]);
 
     return (
@@ -121,6 +121,7 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
                         className="input-concurso"
                         type="text"
                         inputMode="numeric"
+                        disabled={semConcursos}
                         value={inputValue}
                         onKeyDown={handleInputConcurso}
                         onChange={(event) => setInputValue(event.target.value)}
@@ -148,6 +149,7 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
                     className="input-concurso"
                     type="text"
                     inputMode="numeric"
+                    disabled={semConcursos}
                     value={inputValue}
                     onKeyDown={handleInputConcurso}
                     onChange={(event) => setInputValue(event.target.value)}
