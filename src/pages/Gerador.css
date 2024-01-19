@@ -1,0 +1,33 @@
+.volante-gerador {
+    display: block;
+    width: fit-content;
+    border-radius: 10px;
+    background-color: #3D4A3D;
+    border: 1px solid black;
+    margin: 10px auto 0 auto;
+}
+
+.titulo-gerador {
+    padding: 5px;
+    font-weight: bold;
+    color: white;
+}
+
+.botao-gerar {
+    border: none;
+    border-radius: 10px;
+    padding: 0.4rem;
+    margin: 10px;
+    background-color: #202b20;
+    color: white;
+}
+
+.botao-gerar:hover {
+    cursor: pointer;
+    background-color: #455c45;
+}
+
+.painel-gerador {
+    display: flex;
+    justify-content: center;
+}

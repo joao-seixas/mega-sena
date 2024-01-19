@@ -6,7 +6,7 @@ function Menu() {
         <ul>
             <li><Link to="concursos">Concursos</Link></li>
             <li><Link to="numeros">Números</Link></li>
-            <li><Link to="premios">Prêmios</Link></li>
+            <li><Link to="gerador">Gerador</Link></li>
         </ul>
     );
 }

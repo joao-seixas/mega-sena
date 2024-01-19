@@ -4,7 +4,7 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import App from './App';
 import Concursos from './pages/Concursos';
 import Numeros from './pages/Numeros';
-import Premios from './pages/Premios';
+import Gerador from './pages/Gerador';
 import './main.css';
 
 const router = createBrowserRouter([
@@ -25,8 +25,8 @@ const router = createBrowserRouter([
         element: <Numeros />
       },
       {
-        path: 'premios',
-        element: <Premios />
+        path: 'gerador',
+        element: <Gerador />
       }
     ]
   }

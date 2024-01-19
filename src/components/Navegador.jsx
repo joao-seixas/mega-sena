@@ -1,5 +1,6 @@
 import './Navegador.css';
 import { useState, useRef, useEffect } from 'react';
+import binarySearch from '../utils/binarySearch';
 import calendarIcon from '../assets/calendar.svg';
 import nextIcon from '../assets/next.svg';
 import beforeIcon from '../assets/before.svg';
@@ -8,10 +9,10 @@ import lastIcon from '../assets/last.svg';
 
 function Navegador({concurso, sorteios, callbackConcurso, small}) {
     const semConcursos = sorteios.length < 1;
-    const data = semConcursos ?  '' : sorteios[concurso]?.['Data do Sorteio'].split('/').reverse().join('-');
+    const data = semConcursos ?  '' : sorteios[concurso]?.data;
     const dateOptions = small ? {} : {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
-    const dataString = semConcursos ?  '-' : new Date(`${data}T03:00:00`).toLocaleDateString('pt-BR', dateOptions);
-    const [inputValue, setInputValue] = useState(semConcursos ? '' : sorteios[concurso].Concurso);
+    const dataString = semConcursos ?  '-' : data.toLocaleDateString('pt-BR', dateOptions);
+    const [inputValue, setInputValue] = useState(semConcursos ? '' : sorteios[concurso].concurso);
     const refInputData = useRef(null);
     const btnAnteriorDisabled = concurso === 0 || semConcursos;
     const btnPosteriorDisabled = concurso === sorteios.length - 1 || semConcursos;
@@ -20,7 +21,7 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
             binarySearch(
                 new Date(value).getTime(),
                 sorteios.length,
-                (index) => new Date(sorteios[index]['Data do Sorteio'].split('/').reverse().join('-')).getTime()
+                (index) => sorteios[index].data.getTime()
             )
         );
     }
@@ -50,33 +51,16 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
         concursoAtual = binarySearch(
             parseInt(event.target.value),
             sorteios.length,
-            (index) => sorteios[index].Concurso
+            (index) => sorteios[index].concurso
         );
 
         callbackConcurso(concursoAtual);
-        setInputValue(sorteios[concursoAtual].Concurso);
+        setInputValue(sorteios[concursoAtual].concurso);
         event.target.blur();
-    }
-    function binarySearch(searchValue, datasetSize, parseFunction) {
-        let initalPosition = 0;
-        let finalPosition = datasetSize - 1;
-        let middle;
-        let currentValue;
-    
-        while(initalPosition <= finalPosition) {
-            middle = parseInt((initalPosition + finalPosition) / 2);
-            currentValue = parseFunction(middle);
-    
-            if (currentValue === searchValue) return middle;
-            if (currentValue > searchValue) finalPosition = middle - 1;
-            if (currentValue < searchValue) initalPosition = middle + 1;
-        }
-    
-        return middle;
     }
 
     useEffect(() => {
-        setInputValue(semConcursos ? '' : sorteios[concurso].Concurso);
+        setInputValue(semConcursos ? '' : sorteios[concurso].concurso);
     }, [concurso]);
 
     return (

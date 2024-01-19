@@ -27,8 +27,8 @@ function Numeros() {
 
         for (let bola = 0; bola < 60; bola++) {
             for (let concurso = 0; concurso < sorteiosFiltrados.length; concurso++) {
-                for (let bolaConcurso = 1; bolaConcurso < 7; bolaConcurso++) {
-                    if (sorteiosFiltrados[concurso][`Bola${bolaConcurso}`] === bola + 1) {
+                for (let bolaConcurso = 0; bolaConcurso < 6; bolaConcurso++) {
+                    if (sorteiosFiltrados[concurso].bolas[bolaConcurso] === bola + 1) {
                         numeros[bola]++;
                         break;
                     }

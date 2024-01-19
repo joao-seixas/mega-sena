@@ -6,89 +6,53 @@ import Bolas from '../components/Bolas';
 import Premios from '../components/Premios';
 import Player from '../components/Player';
 import Filtro from '../components/Filtro';
+import filter from '../utils/filter';
+import findSequences from '../utils/findSequences';
 
 function Concursos() {
 
     const [sorteios] = useOutletContext();
     const [sequencias, setSequencias] = useState(0);
-    const sorteiosFiltrados = useMemo(findSequences, [sorteios]);
+    const sorteiosFiltrados = useMemo(() => findSequences(sorteios), [sorteios]);
     const [sorteiosAtuais, setSorteiosAtuais] = useState(sorteiosFiltrados[sequencias]);
     const [concurso, setConcurso] = useState(sorteiosFiltrados[sequencias].length - 1);
-    const [bolasMarcadas, setBolasMarcadas] = useState({});
-    const bolas = {
-        [sorteiosAtuais[concurso]?.Bola1] : {cor: 'white', background: '#BF5700', title: 'sorteada'},
-        [sorteiosAtuais[concurso]?.Bola2] : {cor: 'white', background: '#BF5700', title: 'sorteada'},
-        [sorteiosAtuais[concurso]?.Bola3] : {cor: 'white', background: '#BF5700', title: 'sorteada'},
-        [sorteiosAtuais[concurso]?.Bola4] : {cor: 'white', background: '#BF5700', title: 'sorteada'},
-        [sorteiosAtuais[concurso]?.Bola5] : {cor: 'white', background: '#BF5700', title: 'sorteada'},
-        [sorteiosAtuais[concurso]?.Bola6] : {cor: 'white', background: '#BF5700', title: 'sorteada'},
-        ...bolasMarcadas
-    };
+    const [selectedNumbers, setSelectedNumbers] = useState([]);
+    const bolas = getNumbers();
+    function getNumbers() {
+        let numbers = {};
+
+        for(let index = 0; index < 6; index++) {
+            numbers = {...numbers, [sorteiosAtuais[concurso]?.bolas[index]] : {cor: 'white', background: '#BF5700', title: 'sorteada'}};
+        }
+        for(let index = 0; index < selectedNumbers.length; index++) {
+            numbers = {...numbers, [selectedNumbers[index]] : {cor: 'white', background: '#CEA54E', title: 'sorteada'}};
+        }
+        
+        return numbers;
+    }
     function callbackConcurso(novoConcurso) {
         setConcurso(novoConcurso);
     }
     function callbackBola(bola) {
-        let tempBolas = {...bolasMarcadas};
+        let tempNumbers = selectedNumbers;
+        let numberIndex = selectedNumbers.indexOf(bola);
 
-        if (bola in tempBolas) {
-            delete tempBolas[bola];
-            setBolasMarcadas({...tempBolas});
-            filtraSorteios(tempBolas);
+        if (numberIndex > -1) {
+            tempNumbers.splice(numberIndex, 1);
+            markNumbers();
             return;
         }
-        if (Object.keys(tempBolas).length > 5) return;
-        tempBolas = {...tempBolas, [bola] : {cor: 'white', background: '#CEA54E', title: 'sorteada'}};
-        setBolasMarcadas(tempBolas);
-        filtraSorteios(tempBolas);
-    }
-    function filtraSorteios(tempBolas) {
-        let todosEncontrados;
-        let umEncontrado;
-        let novo = [];
+        if (selectedNumbers.length > 6) return;
+        tempNumbers.push(bola);
+        markNumbers();
 
-        for (let indiceSorteios = 0; indiceSorteios < sorteiosFiltrados[sequencias].length; indiceSorteios++) {
-            todosEncontrados = true;
-            for (let indiceMarcadas = 0; indiceMarcadas < Object.keys(tempBolas).length; indiceMarcadas++) {
-                umEncontrado = false;
-                for (let indiceBolas = 1; indiceBolas < 7; indiceBolas++) {
-                    if (Object.keys(tempBolas)[indiceMarcadas] === sorteiosFiltrados[sequencias][indiceSorteios][`Bola${indiceBolas}`].toString()) {
-                        umEncontrado = true;
-                        break;
-                    }
-                }
-                todosEncontrados = todosEncontrados && umEncontrado;
-            }
-            if(todosEncontrados) novo.push(sorteiosFiltrados[sequencias][indiceSorteios]);
-        }
-        setSorteiosAtuais(novo);
-        novo.length > 0 ? setConcurso(novo.length - 1) : setConcurso(-1);
-    }
-    function findSequences() {
-        let sequenciasEncontradas = [[], [], [], [], [], []];
-        let sorted;
-        let tamanhoSequencia;
+        function markNumbers() {
+            let tempSorteiosAtuais = filter(tempNumbers, sorteiosFiltrados[sequencias]);
 
-        for(let sorteio = 0; sorteio < sorteios.length; sorteio++) {
-            sorted = [
-                sorteios[sorteio].Bola1,
-                sorteios[sorteio].Bola2,
-                sorteios[sorteio].Bola3,
-                sorteios[sorteio].Bola4,
-                sorteios[sorteio].Bola5,
-                sorteios[sorteio].Bola6
-            ].sort((a, b) => a - b);
-            tamanhoSequencia = 0;
-            for (let bola = 0; bola < 6;) {
-                if ((sorted[bola] + 1) === sorted[++bola]) tamanhoSequencia++; else
-                    if (tamanhoSequencia > 0) {
-                        sequenciasEncontradas[tamanhoSequencia].push(sorteios[sorteio]);
-                        tamanhoSequencia = 0;
-                    }
-            }
+            setSelectedNumbers(tempNumbers);
+            setSorteiosAtuais(tempSorteiosAtuais);
+            setConcurso(tempSorteiosAtuais.length - 1);
         }
-        sequenciasEncontradas[0] = sorteios;
-        sequenciasEncontradas[1] = [...new Set(sequenciasEncontradas[1])];
-        return sequenciasEncontradas;
     }
     function handleChangeSequencias({target: {value}}) {
         let sequenciaAtual = parseInt(value);
