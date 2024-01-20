@@ -1,5 +1,5 @@
 import './Gerador.css';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import Bolas from '../components/Bolas';
 import filter from '../utils/filter';
@@ -8,11 +8,12 @@ import findQuantities from '../utils/findQuantities';
 function Gerador() {
     const [sorteios] = useOutletContext();
     const quantities = findQuantities(sorteios);
+    const selectedNumbers = useRef([]);
     const [priorizar, setPriorizar] = useState('nenhuma');
-    const [geradas, setGeradas] = useState(gerarBolas());
+    const [geradas, setGeradas] = useState([]);
     const bolas = getNumbers(geradas);
     function gerarBolas() {
-        let bolasGeradas = [];
+        let bolasGeradas = [...selectedNumbers.current];
         let bolaAtual;
         let chancesMap = [];
         let min = Math.min(...quantities);
@@ -27,7 +28,7 @@ function Gerador() {
 
         if (priorizar === 'mais') {
             for (let index = 0; index < 60; index++) {
-                chances = 1 + (Math.trunc((quantities[index] - min) * (100 / (max - min))));
+                chances = 1 + (Math.round((quantities[index] - min) * (100 / (max - min))));
                 for (let chancesIndex = 0; chancesIndex < chances; chancesIndex++) {
                     chancesMap.push(index + 1);
                 }
@@ -36,7 +37,7 @@ function Gerador() {
 
         if (priorizar === 'menos') {
             for (let index = 0; index < 60; index++) {
-                chances = 99 - (Math.trunc((quantities[index] - min) * (100 / (max - min))));
+                chances = 99 - (Math.round((quantities[index] - min) * (100 / (max - min))));
                 for (let chancesIndex = 0; chancesIndex < chances; chancesIndex++) {
                     chancesMap.push(index + 1);
                 }
@@ -44,14 +45,16 @@ function Gerador() {
         }
 
         do {
-            for (let indice = 0; indice < 6; indice++) {
+            for (let indice = 0; indice < 6 - selectedNumbers.current.length; indice++) {
                 do {
                     bolaAtual = chancesMap[Math.floor(Math.random() * chancesMap.length)];
+                    console.log(bolaAtual);
                 } while(bolasGeradas.indexOf(bolaAtual) > -1);
                 bolasGeradas.push(bolaAtual);
             }
         } while (filter(bolasGeradas, sorteios).length > 0);
 
+        console.log(bolasGeradas);
         return bolasGeradas;
     }
     function getNumbers(geradas) {
@@ -60,8 +63,27 @@ function Gerador() {
         for(let index = 0; index < 6; index++) {
             numbers = {...numbers, [geradas[index]] : {cor: 'white', background: '#BF5700', title: 'número da sorte!'}};
         }
-        
+
+        for(let index = 0; index < selectedNumbers.current.length; index++) {
+            numbers = {...numbers, [selectedNumbers.current[index]] : {cor: 'white', background: '#CEA54E', title: 'marcada'}};
+        }
+
         return numbers;
+    }
+    function callbackBola(bola) {
+        let tempNumbers = [...selectedNumbers.current];
+        let numberIndex = selectedNumbers.current.indexOf(parseInt(bola));
+
+        if (numberIndex > -1) {
+            tempNumbers.splice(numberIndex, 1);
+            selectedNumbers.current = tempNumbers;
+            setGeradas(gerarBolas());
+            return;
+        }
+        if (selectedNumbers.current.length > 5) return;
+        tempNumbers.push(parseInt(bola));
+        selectedNumbers.current = tempNumbers;
+        setGeradas(gerarBolas());
     }
 
     return (
@@ -72,7 +94,7 @@ function Gerador() {
                         Boa sorte!
                     </div>
                 </div>
-                <Bolas bolas={bolas} callbackBola={null} />
+                <Bolas bolas={bolas} callbackBola={callbackBola} />
             </div>
             <button
                 className="botao-gerar"

@@ -42,7 +42,7 @@ function Concursos() {
             markNumbers();
             return;
         }
-        if (selectedNumbers.length > 6) return;
+        if (selectedNumbers.length > 5) return;
         tempNumbers.push(bola);
         markNumbers();
 

@@ -27,7 +27,7 @@ function Numeros() {
         let currentNumbers = [];
 
         for (let index = 0; index < 60; index++) {
-            corFundo = 255 - (Math.trunc((quantities[index] - min) * (255 / (max - min))));
+            corFundo = 255 - (Math.round((quantities[index] - min) * (255 / (max - min))));
             currentNumbers[index + 1] = {
                 cor: `rgb(0, 0, 0)`,
                 background: `rgb(255, ${corFundo}, ${corFundo})`,
