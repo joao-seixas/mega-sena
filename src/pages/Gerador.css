@@ -31,3 +31,11 @@
     display: flex;
     justify-content: center;
 }
+
+.priorizar {
+    display: flex;
+    border: 1px solid black;
+    border-radius: 10px;
+    color: white;
+    background-color: #202b20;
+}

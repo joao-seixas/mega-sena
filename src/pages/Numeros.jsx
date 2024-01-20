@@ -4,6 +4,7 @@ import { useOutletContext } from 'react-router-dom';
 import Bolas from '../components/Bolas';
 import Navegador from '../components/Navegador';
 import Player from '../components/Player';
+import findQuantities from '../utils/findQuantities';
 
 function Numeros() {
 
@@ -19,30 +20,22 @@ function Numeros() {
         setConcursoFinal(concurso + concursoInicial + 1);
     }
     function calculaBolas() {
-        let numeros = new Array(60).fill(0);
-        let max = 0;
-        let min = sorteiosFiltrados.length;
+        let quantities = findQuantities(sorteiosFiltrados);
+        let max = Math.max(...quantities);
+        let min = Math.min(...quantities);
         let corFundo;
-        let currentBolas = [];
+        let currentNumbers = [];
 
-        for (let bola = 0; bola < 60; bola++) {
-            for (let concurso = 0; concurso < sorteiosFiltrados.length; concurso++) {
-                for (let bolaConcurso = 0; bolaConcurso < 6; bolaConcurso++) {
-                    if (sorteiosFiltrados[concurso].bolas[bolaConcurso] === bola + 1) {
-                        numeros[bola]++;
-                        break;
-                    }
-                }
-            }
-            if (numeros[bola] > max) max = numeros[bola];
-            if (numeros[bola] < min) min = numeros[bola];
+        for (let index = 0; index < 60; index++) {
+            corFundo = 255 - (Math.trunc((quantities[index] - min) * (255 / (max - min))));
+            currentNumbers[index + 1] = {
+                cor: `rgb(0, 0, 0)`,
+                background: `rgb(255, ${corFundo}, ${corFundo})`,
+                borda: 'black',
+                title: `${quantities[index]} concursos`
+            };
         }
-
-        for (let bola = 0; bola < 60; bola++) {
-            corFundo = 255 - (Math.trunc((numeros[bola] - min) * (255 / (max - min))));
-            currentBolas[bola + 1] = {cor: `rgb(0, 0, 0)`, background: `rgb(255, ${corFundo}, ${corFundo})`, borda: 'black', title: `${numeros[bola]} concursos`};
-        }
-        return currentBolas;
+        return currentNumbers;
     }
     
     return (

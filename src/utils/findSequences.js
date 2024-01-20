@@ -1,21 +1,21 @@
 function findSequences(dataset) {
-    let sequenciasEncontradas = [[], [], [], [], [], []];
-    let tamanhoSequencia;
+    let sequencesFound = [[], [], [], [], [], []];
+    let sequencesSize;
 
-    for(let sorteio = 0; sorteio < dataset.length; sorteio++) {
-        tamanhoSequencia = 0;
+    for(let index = 0; index < dataset.length; index++) {
+        sequencesSize = 0;
         for (let bola = 0; bola < 6;) {
-            if ((dataset[sorteio].bolas[bola] + 1) === dataset[sorteio].bolas[++bola]) tamanhoSequencia++; else
-                if (tamanhoSequencia > 0) {
-                    sequenciasEncontradas[tamanhoSequencia].push(dataset[sorteio]);
-                    tamanhoSequencia = 0;
+            if ((dataset[index].bolas[bola] + 1) === dataset[index].bolas[++bola]) sequencesSize++; else
+                if (sequencesSize > 0) {
+                    sequencesFound[sequencesSize].push(dataset[index]);
+                    sequencesSize = 0;
                 }
         }
     }
-    sequenciasEncontradas[0] = dataset;
-    sequenciasEncontradas[1] = [...new Set(sequenciasEncontradas[1])];
+    sequencesFound[0] = dataset;
+    sequencesFound[1] = [...new Set(sequencesFound[1])];
     
-    return sequenciasEncontradas;
+    return sequencesFound;
 }
 
 export default findSequences
