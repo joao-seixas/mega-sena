@@ -83,39 +83,45 @@ function Gerador() {
             <div className="painel-gerador">
                 <fieldset className="priorizar">
                     <legend>Priorizar:</legend>
-                    <input
-                        type="radio"
-                        name="priorizar"
-                        id="nenhuma"
-                        value="nenhuma"
-                        checked={priorizar == 'nenhuma'}
-                        onChange={(event) => setPriorizar(event.target.value)}
-                    />
-                    <label htmlFor="nenhuma">
-                        Nenhuma
-                    </label>
-                    <input
-                        type="radio"
-                        name="priorizar"
-                        id="mais"
-                        value="mais"
-                        checked={priorizar == 'mais'}
-                        onChange={(event) => setPriorizar(event.target.value)}
-                    />
-                    <label htmlFor="mais">
-                        Mais sorteadas
-                    </label>
-                    <input
-                        type="radio"
-                        name="priorizar"
-                        id="menos"
-                        value="menos"
-                        checked={priorizar == 'menos'}
-                        onChange={(event) => setPriorizar(event.target.value)}
-                    />
-                    <label htmlFor="menos">
-                        Menos sorteadas
-                    </label>
+                    <div>
+                        <input
+                            type="radio"
+                            name="priorizar"
+                            id="nenhuma"
+                            value="nenhuma"
+                            checked={priorizar == 'nenhuma'}
+                            onChange={(event) => setPriorizar(event.target.value)}
+                        />
+                        <label htmlFor="nenhuma">
+                            Nenhuma
+                        </label>
+                    </div>
+                    <div>
+                        <input
+                            type="radio"
+                            name="priorizar"
+                            id="mais"
+                            value="mais"
+                            checked={priorizar == 'mais'}
+                            onChange={(event) => setPriorizar(event.target.value)}
+                        />
+                        <label htmlFor="mais">
+                            Mais sorteadas
+                        </label>
+                    </div>
+                    <div>
+                        <input
+                            type="radio"
+                            name="priorizar"
+                            id="menos"
+                            value="menos"
+                            checked={priorizar == 'menos'}
+                            onChange={(event) => setPriorizar(event.target.value)}
+                        />
+                        <label htmlFor="menos">
+                            Menos sorteadas
+                        </label>
+                    </div>
                 </fieldset>
             </div>
         </div>

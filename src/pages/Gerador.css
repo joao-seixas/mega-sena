@@ -34,6 +34,9 @@
 
 .priorizar {
     display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    align-items: start;
     border: 1px solid black;
     border-radius: 10px;
     color: white;
