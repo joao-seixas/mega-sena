@@ -27,7 +27,7 @@ function Gerador() {
             
             case 'mais' :
                 for (let index = 0; index < 60; index++) {
-                    chances = 1 + (Math.round((quantities[index] - min) * (100 / (max - min))));
+                    chances = 1 + (Math.round((quantities[index] - min) * (9 / (max - min))));
                     for (let chancesIndex = 0; chancesIndex < chances; chancesIndex++) {
                         chancesMap.push(index + 1);
                     }
@@ -36,7 +36,7 @@ function Gerador() {
 
             case 'menos' :
                 for (let index = 0; index < 60; index++) {
-                    chances = 99 - (Math.round((quantities[index] - min) * (100 / (max - min))));
+                    chances = 10 - (Math.round((quantities[index] - min) * (9 / (max - min))));
                     for (let chancesIndex = 0; chancesIndex < chances; chancesIndex++) {
                         chancesMap.push(index + 1);
                     }
