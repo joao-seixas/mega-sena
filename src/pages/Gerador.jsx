@@ -20,41 +20,39 @@ function Gerador() {
         let max = Math.max(...quantities);
         let chances;
 
-        if (priorizar === 'nenhuma') {
-            for (let index = 0; index < 60; index++) {
-                chancesMap.push(index + 1);
-            }
-        }
-
-        if (priorizar === 'mais') {
-            for (let index = 0; index < 60; index++) {
-                chances = 1 + (Math.round((quantities[index] - min) * (100 / (max - min))));
-                for (let chancesIndex = 0; chancesIndex < chances; chancesIndex++) {
-                    chancesMap.push(index + 1);
+        switch (priorizar) {
+            case 'nenhuma' :
+                for (let index = 0; index < 60; index++) chancesMap.push(index + 1);
+                break;
+            
+            case 'mais' :
+                for (let index = 0; index < 60; index++) {
+                    chances = 1 + (Math.round((quantities[index] - min) * (100 / (max - min))));
+                    for (let chancesIndex = 0; chancesIndex < chances; chancesIndex++) {
+                        chancesMap.push(index + 1);
+                    }
                 }
-            }
-        }
+                break;
 
-        if (priorizar === 'menos') {
-            for (let index = 0; index < 60; index++) {
-                chances = 99 - (Math.round((quantities[index] - min) * (100 / (max - min))));
-                for (let chancesIndex = 0; chancesIndex < chances; chancesIndex++) {
-                    chancesMap.push(index + 1);
+            case 'menos' :
+                for (let index = 0; index < 60; index++) {
+                    chances = 99 - (Math.round((quantities[index] - min) * (100 / (max - min))));
+                    for (let chancesIndex = 0; chancesIndex < chances; chancesIndex++) {
+                        chancesMap.push(index + 1);
+                    }
                 }
-            }
+                break;
         }
 
         do {
             for (let indice = 0; indice < 6 - selectedNumbers.current.length; indice++) {
                 do {
                     bolaAtual = chancesMap[Math.floor(Math.random() * chancesMap.length)];
-                    console.log(bolaAtual);
                 } while(bolasGeradas.indexOf(bolaAtual) > -1);
                 bolasGeradas.push(bolaAtual);
             }
         } while (filter(bolasGeradas, sorteios).length > 0);
 
-        console.log(bolasGeradas);
         return bolasGeradas;
     }
     function getNumbers(geradas) {
@@ -103,7 +101,7 @@ function Gerador() {
                 Gerar novo
             </button>
             <div className="painel-gerador">
-                <fieldset className="priorizar">
+                <fieldset className="opcoes-gerador">
                     <legend>Priorizar:</legend>
                     <div>
                         <input

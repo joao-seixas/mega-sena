@@ -28,6 +28,8 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
     function handleInputConcurso(event) {
         // numeros
         if (event.keyCode > 47 && event.keyCode < 58) return;
+        // numpad numeros
+        if (event.keyCode > 95 && event.keyCode < 106) return;
         // backspace
         if (event.keyCode === 8) return;
         // shift/control
@@ -81,7 +83,7 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
                     type="date"
                     ref={refInputData}
                     onChange={inputDataHandleChange}
-                    value={data}
+                    value={data.toISOString().slice(0, 10)}
                 />
             </div>
             <div className="concurso">

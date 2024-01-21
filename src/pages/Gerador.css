@@ -29,12 +29,15 @@
 
 .painel-gerador {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
 }
 
-.priorizar {
+.opcoes-gerador {
     display: flex;
     flex-direction: column;
+    margin: 0.3rem;
     gap: 0.3rem;
     align-items: start;
     border: 1px solid black;

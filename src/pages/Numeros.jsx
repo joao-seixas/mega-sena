@@ -29,7 +29,7 @@ function Numeros() {
         for (let index = 0; index < 60; index++) {
             corFundo = 255 - (Math.round((quantities[index] - min) * (255 / (max - min))));
             currentNumbers[index + 1] = {
-                cor: `rgb(0, 0, 0)`,
+                cor: 'rgb(0, 0, 0)',
                 background: `rgb(255, ${corFundo}, ${corFundo})`,
                 borda: 'black',
                 title: `${quantities[index]} concursos`
@@ -44,17 +44,38 @@ function Numeros() {
                 <div className="numero-concursos">
                     {sorteiosFiltrados.length} {sorteiosFiltrados.length > 1 ? 'concursos' : 'concurso'}
                 </div>
-                <Bolas bolas={bolas} callbackBola={null} />
+                <Bolas
+                    bolas={bolas}
+                    callbackBola={null}
+                />
             </div>
-            <Player concurso={sorteiosFiltrados.length - 1} sorteios={sorteios.slice(concursoInicial, sorteios.length)} callbackConcurso={callbackFim} />
+            <Player
+                concurso={sorteiosFiltrados.length - 1}
+                sorteios={sorteios.slice(concursoInicial, sorteios.length)}
+                callbackConcurso={callbackFim}
+            />
             <div className="painel-numeros">
                 <div className="navegador-numeros">
-                    <div className="titulo">Início</div>
-                    <Navegador concurso={concursoInicial} sorteios={sorteios.slice(0, concursoFinal)} callbackConcurso={callbackInicio} small={true} />
+                    <div className="titulo">
+                        Início
+                    </div>
+                    <Navegador
+                        concurso={concursoInicial}
+                        sorteios={sorteios.slice(0, concursoFinal)}
+                        callbackConcurso={callbackInicio}
+                        small={true}
+                    />
                 </div>
                 <div className="navegador-numeros">
-                    <div className="titulo">Fim</div>
-                    <Navegador concurso={sorteiosFiltrados.length - 1} sorteios={sorteios.slice(concursoInicial, sorteios.length)} callbackConcurso={callbackFim} small={true} />
+                    <div className="titulo">
+                        Fim
+                    </div>
+                    <Navegador
+                        concurso={sorteiosFiltrados.length - 1}
+                        sorteios={sorteios.slice(concursoInicial, sorteios.length)}
+                        callbackConcurso={callbackFim}
+                        small={true}
+                    />
                 </div>
             </div>
         </div>

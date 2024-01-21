@@ -65,12 +65,29 @@ function Concursos() {
     return (
         <div className="concursos">
             <div className="volante">
-                <Navegador concurso={concurso} sorteios={sorteiosAtuais} callbackConcurso={callbackConcurso} small={false} />
-                <Bolas bolas={bolas} callbackBola={callbackBola} />
+                <Navegador
+                    concurso={concurso}
+                    sorteios={sorteiosAtuais}
+                    callbackConcurso={callbackConcurso}
+                    small={false}
+                />
+                <Bolas
+                    bolas={bolas}
+                    callbackBola={callbackBola}
+                />
             </div>
-            <Player concurso={concurso} sorteios={sorteiosAtuais} callbackConcurso={callbackConcurso} />
-            <Premios sorteio={sorteiosAtuais[concurso]} />
-            <Filtro sequencias={sequencias} handleChangeSequencias={handleChangeSequencias} />
+            <Player
+                concurso={concurso}
+                sorteios={sorteiosAtuais}
+                callbackConcurso={callbackConcurso}
+            />
+            <Premios
+                sorteio={sorteiosAtuais[concurso]}
+            />
+            <Filtro
+                sequencias={sequencias}
+                handleChangeSequencias={handleChangeSequencias}
+            />
         </div>
     );
 }
