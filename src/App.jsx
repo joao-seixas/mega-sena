@@ -1,3 +1,4 @@
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { useState, useEffect } from 'react';
 import { read, utils } from 'xlsx';
 import { Outlet } from 'react-router-dom';
@@ -54,6 +55,7 @@ function App() {
     <>
       <Menu />
       <Outlet context={[sorteios]} />
+      <SpeedInsights />
     </>
   )
 }
