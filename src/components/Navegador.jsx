@@ -83,7 +83,7 @@ function Navegador({concurso, sorteios, callbackConcurso, small}) {
                     type="date"
                     ref={refInputData}
                     onChange={inputDataHandleChange}
-                    value={data.toISOString().slice(0, 10)}
+                    value={data? data.toISOString().slice(0, 10) : ''}
                 />
             </div>
             <div className="concurso">
