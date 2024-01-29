@@ -1,53 +1,54 @@
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { useState, useEffect } from 'react';
-import { read, utils } from 'xlsx';
+import JSZip from 'jszip';
 import { Outlet } from 'react-router-dom';
 import Menu from './components/Menu';
 import Loading from './pages/Loading';
 
 function App() {
+  const zipFile = new JSZip();
+  const xmlParser = new DOMParser();
   const [sorteios, setSorteios] = useState(null);
 
   useEffect(() => {
-      const url = './MEGA_SENA.xlsx';
-      fetch(url)
-        .then(fetchedData => fetchedData.arrayBuffer())
-        .then(bufferedData => read(bufferedData))
-        .then(completeData => setSorteios(
-          parseData(
-            utils.sheet_to_json(
-              completeData.Sheets[completeData.SheetNames[0]]
-            )
-          )
-        ));
+      fetch('https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Mega-Sena')
+      .then(data => data.blob())
+      .then(blobData => zipFile.loadAsync(blobData))
+      .then(zipFile => zipFile.files['xl/worksheets/sheet1.xml'].async('text'))
+      .then(texto => xmlParser.parseFromString(texto, 'text/xml'))
+      .then(document => document.getElementsByTagName('x:row'))
+      .then(rows => parseData(rows));
+    
+      function parseData(rows) {
+        let parsedData = [];
+        let childs;
+    
+        for (let rowIndex = 1; rowIndex < rows.length; rowIndex++) {
+          childs = rows[rowIndex].childNodes;
+          parsedData.push({
+              'concurso' : parseInt(childs[0].textContent),
+              'data' : new Date(`${childs[1].textContent.split('/').reverse().join('-')}T03:00:00Z`),
+              'bolas' : [
+                parseInt(childs[2].textContent),
+                parseInt(childs[3].textContent),
+                parseInt(childs[4].textContent),
+                parseInt(childs[5].textContent),
+                parseInt(childs[6].textContent),
+                parseInt(childs[7].textContent)
+              ].sort((a, b) => a - b),
+              'ganhadores' : parseInt(childs[8].textContent),
+              'premio' : parseFloat(childs[10].textContent.replace('R$', '').replaceAll('.', '').replace(',', '.')),
+              'ganhadoresQuina' : parseInt(childs[11].textContent),
+              'premioQuina' : parseFloat(childs[12].textContent.replace('R$', '').replaceAll('.', '').replace(',', '.')),
+              'ganhadoresQuadra' : parseInt(childs[13].textContent),
+              'premioQuadra' : parseFloat(childs[14].textContent.replace('R$', '').replaceAll('.', '').replace(',', '.')),
+              'acumulado' : parseFloat(childs[15].textContent.replace('R$', '').replaceAll('.', '').replace(',', '.'))
+          });
+        }
+      setSorteios(parsedData);
+      }
+  
   }, []);
-
-  function parseData(data) {
-    let parsedData = [];
-
-    for(let index = 0; index < data.length; index++) {
-      parsedData.push({
-        'concurso' : data[index]['Concurso'],
-        'data' : new Date(`${data[index]['Data do Sorteio'].split('/').reverse().join('-')}T03:00:00Z`),
-        'bolas' : [
-          data[index]['Bola1'],
-          data[index]['Bola2'],
-          data[index]['Bola3'],
-          data[index]['Bola4'],
-          data[index]['Bola5'],
-          data[index]['Bola6']
-        ].sort((a, b) => a - b),
-        'ganhadores' : data[index]['Ganhadores 6 acertos'],
-        'premio' : parseFloat(data[index]['Rateio 6 acertos'].replace('R$', '').replaceAll('.', '').replace(',', '.')),
-        'ganhadoresQuina' : data[index]['Ganhadores 5 acertos'],
-        'premioQuina' : parseFloat(data[index]['Rateio 5 acertos'].replace('R$', '').replaceAll('.', '').replace(',', '.')),
-        'ganhadoresQuadra' : data[index]['Ganhadores 4 acertos'],
-        'premioQuadra' : parseFloat(data[index]['Rateio 4 acertos'].replace('R$', '').replaceAll('.', '').replace(',', '.')),
-        'acumulado' : parseFloat(data[index]['Acumulado 6 acertos'].replace('R$', '').replaceAll('.', '').replace(',', '.'))
-      });
-    }
-    return parsedData;
-  }
 
   if (!sorteios) return <Loading />
 

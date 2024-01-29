@@ -1,8 +1,3 @@
-# React + Vite
+# Estatísticas da Mega-Sena
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+App feito em React, com dados de TODOS os jogos da Mega-Sena, onde você pode, além de ver todos os sorteios, filtrar os sorteios por números, buscar sorteios por concurso ou data, ver um mapa de calor dos números que foram mais sorteados, etc.
